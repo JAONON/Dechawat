@@ -74,7 +74,7 @@
         ],
         [
             'title' => 'Profile',
-            'link' => '../profile/profile.php',
+            'link' => '../profile/get_profile.php',
             'submenu' => []
         ],
         [

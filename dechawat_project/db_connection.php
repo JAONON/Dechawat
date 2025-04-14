@@ -13,17 +13,39 @@ try {
 
 class Database {
     private $conn;
+    private $lastQuery;
+    private $lastParams;
 
     public function __construct($conn) {
         $this->conn = $conn;
     }
 
-    public function getSQL($query, $params = []) {
+    public function fetchOne($query, $params = []) {
+        $this->lastQuery = $query;
+        $this->lastParams = $params;
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute($params);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function fetchAll($query, $params = []) {
+        $this->lastQuery = $query;
+        $this->lastParams = $params;
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getSQL() {
+        $query = $this->lastQuery;
+        $params = $this->lastParams;
+
         foreach ($params as $key => $value) {
-            $query = str_replace(":$key", $this->conn->quote($value), $query);
+            $escapedValue = is_null($value) ? 'NULL' : $this->conn->quote($value);
+            $query = str_replace(":$key", $escapedValue, $query);
         }
         return $query;
     }
 }
-
-$db = new Database($conn);

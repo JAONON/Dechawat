@@ -50,7 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $number = isset($_POST['number']) ? trim($_POST['number']) : '';
     $gender = isset($_POST['gender']) ? trim($_POST['gender']) : '';
     $phonenumber = isset($_POST['phonenumber']) ? trim($_POST['phonenumber']) : '';
-
+    $member_logo = isset($_POST['member_logo']) ? trim($_POST['member_logo']) : '';
+    $finalFileName = !empty($newFileName) ? $newFileName : $member_logo;
     // Prepare SQL query to update member
     $sql = "
         UPDATE 
@@ -74,15 +75,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindParam(':number', $number);
     $stmt->bindParam(':gender', $gender);
     $stmt->bindParam(':phonenumber', $phonenumber);
-    $stmt->bindParam(':newFileName', $newFileName);
+    $stmt->bindParam(':newFileName', $finalFileName);
     
     // Execute the query
     if ($stmt->execute()) {
-        header('Location: ../profile/profile.php');
+        header('Location: ../profile/get_profile.php');
         exit;
     } else {
         $errorInfo = $stmt->errorInfo();
-        header('Location: ../profile/profile.php?status=error&msg=' . urlencode($errorInfo[2]));
+        header('Location: ../profile/get_profile.php?status=error&msg=' . urlencode($errorInfo[2]));
         exit;
     }
 
