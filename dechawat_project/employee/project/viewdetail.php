@@ -33,7 +33,7 @@
             <div class="row">
                 <?php foreach ($images as $image): ?>
                     <div class="col-md-4 mb-3">
-                        <img src="../../asset/image/<?php echo $image['project_id'] . '/' . htmlspecialchars($image['project_image_name']); ?>" 
+                        <img src="../../asset/image/project/<?php echo $image['project_id'] . '/' . htmlspecialchars($image['project_image_name']); ?>" 
                              class="img-fluid rounded" alt="Project Image">
                     </div>
                 <?php endforeach; ?>

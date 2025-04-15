@@ -31,7 +31,7 @@
 
                 <h2>Project Images</h2>
                 <?php foreach ($image as $val){ ?>
-                    <?php $image_path = "../asset/image/" . $val['project_id'] .'/'. $val['project_image_name']; ?>
+                    <?php $image_path = "../asset/image/project/" . $val['project_id'] .'/'. $val['project_image_name']; ?>
                     <img src="<?php echo htmlspecialchars($image_path); ?>" alt="Project Image" style="max-width: 200px; display: block; margin-bottom: 10px;">
                 <?php }; ?>
             </div>

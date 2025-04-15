@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if($lastInsertId && $_FILES){
         // Define the directory path
-        $uploadDir = '../asset/image/' . $lastInsertId . '/';
+        $uploadDir = '../asset/image/project/' . $lastInsertId . '/';
 
         // Check if the directory exists, if not, create it
         if (!is_dir($uploadDir)) {

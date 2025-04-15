@@ -79,7 +79,7 @@ if ($searchName || $searchDate || $searchStatus) {
                 <?php foreach ($projects as $project): ?>
                     <div class="col-md-4 mb-4">
                         <div class="card">
-                            <img src="<?= '../../asset/image/'.$project['project_id'].'/'.htmlspecialchars($project['project_image_name'] ?: 'default_image.png') ?>" class="card-img-top" alt="Project Image">
+                            <img src="<?= '../../asset/image/project/'.$project['project_id'].'/'.htmlspecialchars($project['project_image_name'] ?: 'default_image.png') ?>" class="card-img-top" alt="Project Image">
                             <div class="card-body">
                                 <h5 class="card-title"><?= htmlspecialchars($project['name']) ?></h5>
                                 <p class="card-text"><?= htmlspecialchars($project['description']) ?></p>
