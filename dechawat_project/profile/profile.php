@@ -7,11 +7,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
+<style>
+    .pl-0{
+        padding-left: 0;
+    }
+</style>
 <form method="post" action="save_profile.php" enctype="multipart/form-data">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3 pl-0">
                 <?php require_once '../sidebar/sidebar.php'; ?>
             </div>
             <div class="col-md-9 mt-5">
@@ -19,7 +23,7 @@
                     <div class="row g-0">
                         <div class="col-md-4" style="padding: 20px;">
                             <div style="position: relative; display: inline-block;">
-                                <img id="profileImage" src="<?php echo $memberData['member_logo'] ? '../asset/image/'.$_SESSION['member']['member_id'].'/'.$memberData['member_logo'] : '../asset/image/master/avatar.png' ?>" class="img-fluid rounded-start" alt="Profile Picture" style="width: 300px; height: auto; cursor: pointer;">
+                                <img id="profileImage" src="<?php echo $memberData['member_logo'] ? '../asset/image/'.$_SESSION['member']['member_id'].'/profile/'.$memberData['member_logo'] : '../asset/image/master/avatar.png' ?>" class="img-fluid rounded-start" alt="Profile Picture" style="width: 300px; height: auto; cursor: pointer;">
                                 <div id="hoverOverlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: none; justify-content: center; align-items: center; color: white; font-size: 24px; cursor: pointer; pointer-events: none;">
                                     <i class="bi bi-camera"></i> Change Picture
                                 </div>

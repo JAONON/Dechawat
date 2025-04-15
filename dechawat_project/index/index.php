@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,12 +54,15 @@
         .pagination{
             justify-content: center;
         }
+        .pl-0{
+            padding-left: 0;
+        }
     </style>
 </head>
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3 pl-0">
                 <?php require_once '../sidebar/sidebar.php'; ?>
             </div>
             <div class="col-md-9">

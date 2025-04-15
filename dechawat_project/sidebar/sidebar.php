@@ -1,7 +1,7 @@
 <style>
     .sidebar {
         width: 100%;
-        height: 100vh;
+        min-height: 100vh;
         background-color: #f4f4f4;
         padding: 15px;
         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -29,19 +29,71 @@
 </style>
 
 <?php
-
-    $menuItems = [
+    $menuItems["employee"] = [
+        [
+            'title' => 'Home',
+            'link' => '../employee/project/getproject.php',
+            'submenu' => []
+        ],
+        // [
+        //     'title' => 'Project',
+        //     'link' => '#',
+        //     'submenu' => [
+        //         ['title' => 'List', 'link' => '../project/getproject.php'],
+        //         ['title' => 'Add', 'link' => '../project/addproject.php']
+        //     ]
+        // ],
+        [
+            'title' => 'Menu 3',
+            'link' => '#',
+            'submenu' => []
+        ],
+        [
+            'title' => 'Menu 4',
+            'link' => '#',
+            'submenu' => [
+                ['title' => 'Submenu 4.1', 'link' => '#'],
+                ['title' => 'Submenu 4.2', 'link' => '#']
+            ]
+        ],
+        [
+            'title' => 'Menu 5',
+            'link' => '#',
+            'submenu' => []
+        ],
+        [
+            'title' => 'Menu 6',
+            'link' => '#',
+            'submenu' => []
+        ],
+        [
+            'title' => 'Menu 8',
+            'link' => '#',
+            'submenu' => []
+        ],
+        [
+            'title' => 'Profile',
+            'link' => '../profile/get_profile.php',
+            'submenu' => []
+        ],
+        [
+            'title' => 'Logout',
+            'link' => '../../logout/logout.php',
+            'submenu' => []
+        ]
+    ];
+    $menuItems["employer"] = [
         [
             'title' => 'Home',
             'link' => '../index/index.php',
             'submenu' => []
         ],
         [
-            'title' => 'Member',
+            'title' => 'Project',
             'link' => '#',
             'submenu' => [
-                ['title' => 'Submenu 2.1', 'link' => '#'],
-                ['title' => 'Submenu 2.2', 'link' => '#']
+                ['title' => 'List', 'link' => '../project/getproject.php'],
+                ['title' => 'Add', 'link' => '../project/addproject.php']
             ]
         ],
         [
@@ -86,24 +138,24 @@
 ?>
 <div class="sidebar">
     <ul>
-        <?php foreach ($menuItems as $index => $menuItem): ?>
+        <?php foreach ($menuItems[$_SESSION["member"]["role"]] as $index => $menuItem){ ?>
             <li>
                 <a href="<?= $menuItem['link']; ?>" 
                    <?= !empty($menuItem['submenu']) ? "onclick=\"toggleSubmenu(event, 'submenu-$index')\"" : ""; ?>>
                     <?= $menuItem['title']; ?>
-                    <?php if (!empty($menuItem['submenu'])): ?>
+                    <?php if (!empty($menuItem['submenu'])){ ?>
                         <span id="arrow-submenu-<?= $index; ?>">▼</span>
-                    <?php endif; ?>
+                    <?php }; ?>
                 </a>
-                <?php if (!empty($menuItem['submenu'])): ?>
+                <?php if (!empty($menuItem['submenu'])){ ?>
                     <ul id="submenu-<?= $index; ?>" style="display: none;">
-                        <?php foreach ($menuItem['submenu'] as $submenuItem): ?>
+                        <?php foreach ($menuItem['submenu'] as $submenuItem){ ?>
                             <li><a href="<?= $submenuItem['link']; ?>"><?= $submenuItem['title']; ?></a></li>
-                        <?php endforeach; ?>
+                        <?php }; ?>
                     </ul>
-                <?php endif; ?>
+                <?php }; ?>
             </li>
-        <?php endforeach; ?>
+        <?php }; ?>
     </ul>
 </div>
 <script>

@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve data from the form
     if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
 
-        $uploadDir = realpath(__DIR__ . '/../asset/image') . '/';
+        $uploadDir = realpath(__DIR__ . '/../asset/image/profile') . '/';
         $memberId = $_SESSION['member']['member_id'];
         $memberFolder = $uploadDir . $memberId;
 
