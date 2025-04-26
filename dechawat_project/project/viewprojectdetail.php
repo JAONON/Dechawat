@@ -29,10 +29,9 @@
                             $stepNumber = $step["status_id"];
                             $num = $index + 1;
                             $isActive = $step["success"] ? 'active' : '';
-                            $isLastStep = $stepNumber === count($status) ? 'last-step' : '';
-                            echo "<li class='step-item $isActive $isLastStep' onclick='updateStep($stepNumber)'>";
+                            echo "<li class='step-item $isActive'" . ($isActive ? '' : " onclick='updateStep($stepNumber)'") . ">";
                             echo "<div><span class='step-number'>$num</span></div>";
-                            echo "<div class='step-title'>Step ".$index.":".$step['status_name']."</div>";
+                            echo "<div class='step-title'>Step ".$num.":".$step['status_name']."</div>";
                             echo "</li>";
                         }
                         ?>
@@ -98,9 +97,7 @@
                 </style>
                 <script>
                     function updateStep(stepNumber) {
-                        console.log(stepNumber);
-                        
-                        if (confirm('Are you sure you want to update the project to Step ' + stepNumber + '?')) {
+                        if (confirm('Are you sure you want to update the project to Step ?')) {
                             // Redirect to the update step page
                             const form = document.createElement('form');
                             form.method = 'POST';
