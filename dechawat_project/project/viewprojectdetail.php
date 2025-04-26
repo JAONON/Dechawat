@@ -27,10 +27,11 @@
                         <?php 
                         foreach ($status as $index => $step) {
                             $stepNumber = $step["status_id"];
+                            $num = $index + 1;
                             $isActive = $step["success"] ? 'active' : '';
                             $isLastStep = $stepNumber === count($status) ? 'last-step' : '';
                             echo "<li class='step-item $isActive $isLastStep' onclick='updateStep($stepNumber)'>";
-                            echo "<div><span class='step-number'>$stepNumber</span></div>";
+                            echo "<div><span class='step-number'>$num</span></div>";
                             echo "<div class='step-title'>Step ".$index.":".$step['status_name']."</div>";
                             echo "</li>";
                         }
