@@ -31,6 +31,9 @@ if ($searchName || $searchDate || $searchStatus) {
     .sidebar{
         height: 100%;
     }
+    .pl-0{
+        padding-left: 0;
+    }
 </style>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +47,7 @@ if ($searchName || $searchDate || $searchStatus) {
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->
-        <div class="col-3">
+        <div class="col-md-3 pl-0">
             <?php require_once '../../sidebar/sidebar.php'; ?>
         </div>
 
