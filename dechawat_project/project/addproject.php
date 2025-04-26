@@ -79,8 +79,27 @@
 
                     <label for="project_date">Date:</label><br>
                     <input class="form-control" type="date" id="project_date" name="project_date" required><br>
-                    
-                    <div class="col-md-3" style="margin-bottom: 10px;">
+                    <div id="status_container">
+                        <label for="project_status_1">Project Status:</label><br>
+                        <input class="form-control" type="text" id="project_status_1" name="project_status[]" required><br>
+                    </div>
+                    <button type="button" class="btn btn-secondary" onclick="addStatus()">+ Add Status</button>
+
+                    <script>
+                        let statusCount = 1;
+
+                        function addStatus() {
+                            statusCount++;
+                            const statusContainer = document.getElementById('status_container');
+                            const newStatusDiv = document.createElement('div');
+                            newStatusDiv.innerHTML = `
+                                <label for="project_status_${statusCount}">Project Status:</label><br>
+                                <input class="form-control" type="text" id="project_status_${statusCount}" name="project_status[]" required><br>
+                            `;
+                            statusContainer.appendChild(newStatusDiv);
+                        }
+                    </script>
+                    <div class="col-md-3" style="margin: 10px 0 10px 0;">
                         <button class="form-control" type="submit">Save</button>
                     </div>
                 </form>
