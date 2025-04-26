@@ -76,7 +76,7 @@
                         background-color: #ddd;
                         z-index: -1;
                     }
-                    .step-item.active:not(:last-child)::after {
+                    .step-item.active::after {
                         background-color: #0d6efd;
                     }
                     .step-number {
