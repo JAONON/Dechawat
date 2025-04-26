@@ -32,7 +32,7 @@
     $menuItems["employee"] = [
         [
             'title' => 'Home',
-            'link' => '../employee/project/getproject.php',
+            'link' => '../project/getproject.php',
             'submenu' => []
         ],
         // [

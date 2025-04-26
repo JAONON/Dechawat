@@ -36,13 +36,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindParam(':password', $password);
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
+    
     // Debugging code removed
     if($user){
         // Redirect to dashboard or home page
         $_SESSION["member"] = $user;
-        header('Location: ../index/index.php');
-        exit();
+        if($user["role"] == "employee"){
+            header('Location: ../employee/index/index.php');
+            exit();
+        }else{
+            header('Location: ../index/index.php');
+            exit();
+        }
     } else {
         header('Location: ../login/login.php');
         exit();
