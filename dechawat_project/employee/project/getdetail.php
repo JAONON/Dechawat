@@ -16,7 +16,15 @@
     $img->execute();
     $image = $img->fetchAll(PDO::FETCH_ASSOC);
 
-    $project = $result;
+    // get status
+    $sql = "SELECT * FROM status WHERE project_id = :project_id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':project_id', $project_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $projectStatus = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $projectData = $result;
     $images = $image;
+    $status = $projectStatus;
 
     include './viewdetail.php';
