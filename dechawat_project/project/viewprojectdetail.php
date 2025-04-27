@@ -39,6 +39,19 @@
                         ?>
                     </ul>
                 </div>
+                <?php 
+                    $nextStatusId = null;
+                    foreach ($status as $index => $item) {
+                        if ($item['status_id'] == $statusId) {
+                            // ถ้ามีตัวถัดไปใน array
+                            if (isset($status[$index + 1])) {
+                                $nextStatusId = $status[$index + 1]['status_id'];
+                            }
+                        }
+                    }
+                ?>
+                <input type="hidden" id="nextStatusId" value="<?php echo $nextStatusId; ?>">
+
                 <div class="row">
                     <h1>Project Details</h1>
                     <p><strong>Name:</strong> <?php echo htmlspecialchars($projectData['name']); ?></p>
@@ -202,41 +215,6 @@
                         font-size: 14px;
                     }
                 </style>
-                <script>
-                    function updateStep(stepNumber) {
-                        if (confirm('Are you sure you want to update the project to Step ?')) {
-                            // Redirect to the update step page
-                            const form = document.createElement('form');
-                            form.method = 'POST';
-                            form.action = 'updatestatus.php';
-
-                            const input = document.createElement('input');
-
-                            input.type = 'hidden';
-                            input.name = 'step';
-                            input.value = stepNumber;
-
-                            const projectIdInput = document.createElement('input');
-                            projectIdInput.type = 'hidden';
-                            projectIdInput.name = 'project_id';
-                            projectIdInput.value = '<?php echo htmlspecialchars($project_id); ?>';
-                            form.appendChild(projectIdInput);
-
-                            form.appendChild(input);
-                            document.body.appendChild(form);
-                            form.submit();
-                        }
-                    }
-
-                    function toggleSubcommentForm(commentId) {
-                        const form = document.getElementById(`subcomment-form-${commentId}`);
-                        if (form.style.display === 'none' || form.style.display === '') {
-                            form.style.display = 'block';
-                        } else {
-                            form.style.display = 'none';
-                        }
-                    }
-                </script>
             </div>
                 <style>
                     .stepper {
@@ -282,28 +260,42 @@
                     }
                 </style>
                 <script>
+                    function toggleSubcommentForm(commentId) {
+                        const form = document.getElementById(`subcomment-form-${commentId}`);
+                        if (form.style.display === 'none' || form.style.display === '') {
+                            form.style.display = 'block';
+                        } else {
+                            form.style.display = 'none';
+                        }
+                    }
+                    
                     function updateStep(stepNumber) {
-                        if (confirm('Are you sure you want to update the project to Step ?')) {
-                            // Redirect to the update step page
-                            const form = document.createElement('form');
-                            form.method = 'POST';
-                            form.action = 'updatestatus.php';
-
-                            const input = document.createElement('input');
-
-                            input.type = 'hidden';
-                            input.name = 'step';
-                            input.value = stepNumber;
-
-                            const projectIdInput = document.createElement('input');
-                            projectIdInput.type = 'hidden';
-                            projectIdInput.name = 'project_id';
-                            projectIdInput.value = '<?php echo htmlspecialchars($project_id); ?>';
-                            form.appendChild(projectIdInput);
-
-                            form.appendChild(input);
-                            document.body.appendChild(form);
-                            form.submit();
+                        const nextStatusId = document.getElementById('nextStatusId').value;
+                        if(nextStatusId == stepNumber){
+                            if (confirm('Are you sure you want to update the project to Step ?')) {
+                                // Redirect to the update step page
+                                const form = document.createElement('form');
+                                form.method = 'POST';
+                                form.action = 'updatestatus.php';
+    
+                                const input = document.createElement('input');
+    
+                                input.type = 'hidden';
+                                input.name = 'step';
+                                input.value = stepNumber;
+    
+                                const projectIdInput = document.createElement('input');
+                                projectIdInput.type = 'hidden';
+                                projectIdInput.name = 'project_id';
+                                projectIdInput.value = '<?php echo htmlspecialchars($project_id); ?>';
+                                form.appendChild(projectIdInput);
+    
+                                form.appendChild(input);
+                                document.body.appendChild(form);
+                                form.submit();
+                            }
+                        }else{
+                            alert('You cannot update to this step.');
                         }
                     }
                 </script>
