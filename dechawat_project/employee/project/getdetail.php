@@ -4,7 +4,8 @@
 
     // Get project_id from POST
     $project_id = $_POST['project_id'];
-
+    $stepFilter = isset($_POST['stepFilter']) ? $_POST['stepFilter'] : null;
+    
     // Prepare and execute the query
     $stmt = $conn->prepare("SELECT * FROM project WHERE project_id = :project_id");
     $stmt->bindValue(":project_id", $project_id);
@@ -22,7 +23,11 @@
     $stmt->bindParam(':project_id', $project_id, PDO::PARAM_INT);
     $stmt->execute();
     $projectStatus = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+    
+    if(!$stepFilter){
+        $stepFilter = $projectStatus[0]['status_id'];
+    }
+    
     // get comment
     $sql = "
         SELECT 
@@ -35,26 +40,38 @@
         LEFT JOIN member ON comment.member_id = member.member_id
         WHERE 
             project_id = :project_id
+        AND status_id = :filter
         ORDER BY comment.created_at DESC
     ";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':project_id', $project_id, PDO::PARAM_INT);
+    $stmt->bindParam(':filter', $stepFilter, PDO::PARAM_INT);
     $stmt->execute();
     $Arrcomment = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
+    $commentId = array_column($Arrcomment, 'comment_id');
+
     $comment = [];
     foreach ($Arrcomment as $key => $value) {
-            $comment[$value["status_id"]][] = [
-                'comment_id' => $value['comment_id'],
-                'username' => $value['name']." ".$value['lastname'],
-                'comment' => $value['message'],
-                'image' => $value['image_name'],
-                'timestamp' => $value['created_at'],
-                'step_id' => $value['status_id'],
-            ];
+        $comment[$value["status_id"]][] = [
+            'comment_id' => $value['comment_id'],
+            'username' => $value['name']." ".$value['lastname'],
+            'comment' => $value['message'],
+            'image' => $value['image_name'],
+            'timestamp' => $value['created_at'],
+            'step_id' => $value['status_id'],
+        ];
     }
     
     // get sub_comment
+    if (empty($commentId)) {
+        $commentId = [null];
+    }
+    
+    // เตรียมแปลง array เป็น string
+    $commentIdSafe = array_map(function($id) {
+        return ($id === null) ? 'NULL' : (int)$id;
+    }, $commentId);
+    
     $sql = "
         SELECT 
             sub_comment.*,
@@ -64,12 +81,14 @@
         JOIN member ON sub_comment.member_id = member.member_id
         WHERE 
             project_id = :project_id
+        AND comment_id IN (".implode(',', $commentIdSafe).")
         ORDER BY created_at ASC
     ";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':project_id', $project_id, PDO::PARAM_INT);
     $stmt->execute();
     $ArrSubcomment = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
     $subcomment = [];
     foreach ($ArrSubcomment as $key2 => $value2) {
         $subcomment[] = [
@@ -85,5 +104,6 @@
     $status = $projectStatus;
     $comments = $comment;
     $subcomments = $subcomment;
-
+    $selectStatusSearch = $stepFilter;
+    
     include './viewdetail.php';

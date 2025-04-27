@@ -76,19 +76,19 @@
             <div class="row">
                 <div class="row">
                     <h2>Search Comments by Step</h2>
-                    <form method="GET" action="">
+                    <form method="POST" action="getdetail.php">
                         <div class="mb-3">
                             <label for="stepFilter" class="form-label">Select Step</label>
                             <select class="form-select" id="stepFilter" name="stepFilter" onchange="this.form.submit()">
-                                <option value="">All Steps</option>
                                 <?php foreach ($status as $step): ?>
                                     <option value="<?php echo htmlspecialchars($step['status_id']); ?>" 
-                                        <?php echo (isset($_GET['stepFilter']) && $_GET['stepFilter'] == $step['status_id']) ? 'selected' : ''; ?>>
+                                        <?php echo (isset($selectStatusSearch) && $selectStatusSearch == $step['status_id']) ? 'selected' : ''; ?>>
                                         Step <?php echo htmlspecialchars($step['status_id']); ?>: <?php echo htmlspecialchars($step['status_name']); ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        <input type="hidden" name="project_id" value="<?php echo htmlspecialchars($project_id); ?>">
                     </form>
                 </div>
                 <?php
@@ -108,119 +108,136 @@
                     $subcomments = $subcomments;
 
                     // Display comments with subcomments
-                    foreach ($commentsByStep as $stepId => $stepComments) {
-                        echo '<div class="step-comments">';
-                        echo '<h3>Step ' . htmlspecialchars($stepId) . '</h3>';
-                        foreach ($stepComments as $comment) {
-                            echo '<div class="comment">';
-                            echo '<p><strong>' . htmlspecialchars($comment['username']) . '</strong> <small>(' . htmlspecialchars($comment['timestamp']) . ')</small></p>';
-                            echo '<p>' . htmlspecialchars($comment['comment']) . '</p>';
-                            if ($comment['image']) {
-                                $image_path = "../asset/image/comment/" . $comment['comment_id'] ."/". $comment['image'];
-                                echo '<img src="' . htmlspecialchars($image_path) . '" alt="Comment Image" style="max-width: 200px; display: block; margin-bottom: 10px;">';
-                            }
-
-                            // Display subcomments
-                            echo '<div class="subcomments">';
-                            foreach ($subcomments as $subcomment) {
-                                if ($subcomment['parent_comment_id'] == $comment['comment_id']) {
-                                    echo '<div class="subcomment" style="margin-left: 20px; border-left: 2px solid #ddd; padding-left: 10px;">';
-                                    echo '<p><strong>' . htmlspecialchars($subcomment['username']) . '</strong> <small>(' . htmlspecialchars($subcomment['timestamp']) . ')</small></p>';
-                                    echo '<p>' . htmlspecialchars($subcomment['comment']) . '</p>';
-                                    echo '</div>';
+                    if($commentsByStep){
+                        foreach ($commentsByStep as $stepId => $stepComments) {
+                            echo '<div class="step-comments">';
+                            echo '<h3>Step ' . htmlspecialchars($stepId) . '</h3>';
+                            foreach ($stepComments as $comment) {
+                                echo '<div class="comment">';
+                                echo '<p><strong>' . htmlspecialchars($comment['username']) . '</strong> <small>(' . htmlspecialchars($comment['timestamp']) . ')</small></p>';
+                                echo '<p>' . htmlspecialchars($comment['comment']) . '</p>';
+                                if ($comment['image']) {
+                                    $image_path = "../asset/image/comment/" . $comment['comment_id'] ."/". $comment['image'];
+                                    echo '<img src="' . htmlspecialchars($image_path) . '" alt="Comment Image" style="max-width: 200px; display: block; margin-bottom: 10px;">';
                                 }
-                            }
-                            echo '</div>';
+    
+                                // Display subcomments
+                                echo '<div class="subcomments">';
+                                foreach ($subcomments as $subcomment) {
+                                    if ($subcomment['parent_comment_id'] == $comment['comment_id']) {
+                                        echo '<div class="subcomment" style="margin-left: 20px; border-left: 2px solid #ddd; padding-left: 10px;">';
+                                        echo '<p><strong>' . htmlspecialchars($subcomment['username']) . '</strong> <small>(' . htmlspecialchars($subcomment['timestamp']) . ')</small></p>';
+                                        echo '<p>' . htmlspecialchars($subcomment['comment']) . '</p>';
+                                        echo '</div>';
+                                    }
+                                }
+                                echo '</div>';
 
-                            echo '<hr>';
-                            echo '</div>';
-                            
-                            echo '</div>';
-                            echo '<div class="add-subcomment" style="margin-left: 20px; margin-top: 10px;">';
-                            echo '<form action="subcomment.php" method="POST">';
-                            echo '<div class="mb-3">';
-                            echo '<label for="subcomment_' . htmlspecialchars($comment['step_id']) . '" class="form-label">Add Subcomment</label>';
-                            echo '<textarea class="form-control" id="subcomment_' . htmlspecialchars($comment['step_id']) . '" name="subcomment" rows="2" required></textarea>';
-                            echo '</div>';
-                            echo '<input type="hidden" name="comment_id" value="' . $comment["comment_id"] . '">';
-                            echo '<input type="hidden" name="project_id" value="' . $project_id . '">';
-                            echo '<button type="submit" class="btn btn-secondary btn-sm">Submit</button>';
-                            echo '</form>';
-                            echo '</div>';
+                                echo '<div class="toggle-subcomment" style="margin: 10px 0 10px 0;">';
+                                echo '<a href="javascript:void(0);" onclick="toggleSubcommentForm(' . htmlspecialchars($comment['comment_id']) . ')">คอมเม้น</a>';
+                                echo '</div>';
+                                echo '<div id="subcomment-form-' . htmlspecialchars($comment['comment_id']) . '" class="add-subcomment" style="margin-left: 20px; margin-top: 10px; display: none;">';
+                                echo '<form action="subcomment.php" method="POST">';
+                                echo '<div class="mb-3">';
+                                echo '<label for="subcomment_' . htmlspecialchars($comment['step_id']) . '" class="form-label">Add Subcomment</label>';
+                                echo '<textarea class="form-control" id="subcomment_' . htmlspecialchars($comment['step_id']) . '" name="subcomment" rows="2" required></textarea>';
+                                echo '</div>';
+                                echo '<input type="hidden" name="comment_id" value="' . $comment["comment_id"] . '">';
+                                echo '<input type="hidden" name="project_id" value="' . $project_id . '">';
+                                echo '<button type="submit" class="btn btn-secondary btn-sm">Submit</button>';
+                                echo '</form>';
+                                echo '</div>';
+                                echo '</div>';
+
+                                echo '<hr>';
+                                echo '</div>';
+                            }
                         }
+                    }else{
+                        echo '<p>No comments available for this step.</p>';
                     }
                     ?>
                 </div>
                 
-            <style>
-                .stepper {
-                    list-style: none;
-                    padding: 0;
-                    display: flex;
-                    justify-content: space-between;
-                }
-                .step-item {
-                    text-align: center;
-                    flex: 1;
-                    position: relative;
-                    cursor: pointer;
-                }
-                .step-item::after {
-                    content: '';
-                    position: absolute;
-                    top: 50%;
-                    right: 0;
-                    width: 100%;
-                    height: 2px;
-                    background-color: #ddd;
-                    z-index: -1;
-                }
-                .step-item.active::after {
-                    background-color: #0d6efd;
-                }
-                .step-number {
-                    display: inline-block;
-                    width: 30px;
-                    height: 30px;
-                    line-height: 30px;
-                    border-radius: 50%;
-                    background-color: #ddd;
-                    color: #fff;
-                    margin-bottom: 5px;
-                }
-                .step-item.active .step-number {
-                    background-color: #0d6efd;
-                }
-                .step-title {
-                    font-size: 14px;
-                }
-            </style>
-            <script>
-                function updateStep(stepNumber) {
-                    if (confirm('Are you sure you want to update the project to Step ?')) {
-                        // Redirect to the update step page
-                        const form = document.createElement('form');
-                        form.method = 'POST';
-                        form.action = 'updatestatus.php';
-
-                        const input = document.createElement('input');
-
-                        input.type = 'hidden';
-                        input.name = 'step';
-                        input.value = stepNumber;
-
-                        const projectIdInput = document.createElement('input');
-                        projectIdInput.type = 'hidden';
-                        projectIdInput.name = 'project_id';
-                        projectIdInput.value = '<?php echo htmlspecialchars($project_id); ?>';
-                        form.appendChild(projectIdInput);
-
-                        form.appendChild(input);
-                        document.body.appendChild(form);
-                        form.submit();
+                <style>
+                    .stepper {
+                        list-style: none;
+                        padding: 0;
+                        display: flex;
+                        justify-content: space-between;
                     }
-                }
-            </script>
+                    .step-item {
+                        text-align: center;
+                        flex: 1;
+                        position: relative;
+                        cursor: pointer;
+                    }
+                    .step-item::after {
+                        content: '';
+                        position: absolute;
+                        top: 50%;
+                        right: 0;
+                        width: 100%;
+                        height: 2px;
+                        background-color: #ddd;
+                        z-index: -1;
+                    }
+                    .step-item.active::after {
+                        background-color: #0d6efd;
+                    }
+                    .step-number {
+                        display: inline-block;
+                        width: 30px;
+                        height: 30px;
+                        line-height: 30px;
+                        border-radius: 50%;
+                        background-color: #ddd;
+                        color: #fff;
+                        margin-bottom: 5px;
+                    }
+                    .step-item.active .step-number {
+                        background-color: #0d6efd;
+                    }
+                    .step-title {
+                        font-size: 14px;
+                    }
+                </style>
+                <script>
+                    function updateStep(stepNumber) {
+                        if (confirm('Are you sure you want to update the project to Step ?')) {
+                            // Redirect to the update step page
+                            const form = document.createElement('form');
+                            form.method = 'POST';
+                            form.action = 'updatestatus.php';
+
+                            const input = document.createElement('input');
+
+                            input.type = 'hidden';
+                            input.name = 'step';
+                            input.value = stepNumber;
+
+                            const projectIdInput = document.createElement('input');
+                            projectIdInput.type = 'hidden';
+                            projectIdInput.name = 'project_id';
+                            projectIdInput.value = '<?php echo htmlspecialchars($project_id); ?>';
+                            form.appendChild(projectIdInput);
+
+                            form.appendChild(input);
+                            document.body.appendChild(form);
+                            form.submit();
+                        }
+                    }
+
+                    function toggleSubcommentForm(commentId) {
+                        const form = document.getElementById(`subcomment-form-${commentId}`);
+                        if (form.style.display === 'none' || form.style.display === '') {
+                            form.style.display = 'block';
+                        } else {
+                            form.style.display = 'none';
+                        }
+                    }
+                </script>
+            </div>
         </div>
     </div>
 </div>
