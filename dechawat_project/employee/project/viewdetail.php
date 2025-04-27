@@ -80,10 +80,10 @@
                         <div class="mb-3">
                             <label for="stepFilter" class="form-label">Select Step</label>
                             <select class="form-select" id="stepFilter" name="stepFilter" onchange="this.form.submit()">
-                                <?php foreach ($status as $step): ?>
+                                <?php foreach ($status as $key => $step): ?>
                                     <option value="<?php echo htmlspecialchars($step['status_id']); ?>" 
                                         <?php echo (isset($selectStatusSearch) && $selectStatusSearch == $step['status_id']) ? 'selected' : ''; ?>>
-                                        Step <?php echo htmlspecialchars($step['status_id']); ?>: <?php echo htmlspecialchars($step['status_name']); ?>
+                                        Step <?php echo $key + 1 ?>: <?php echo htmlspecialchars($step['status_name']); ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
@@ -107,11 +107,15 @@
                     $commentsByStep = $comments;
                     $subcomments = $subcomments;
 
+                    $findStatudId = array_column($status, 'status_id');
+                    $findIndex = array_search($key, $findStatudId);
+                    $status_name = $index !== false ? $status[$index]['status_name'] : null;
+
                     // Display comments with subcomments
                     if($commentsByStep){
                         foreach ($commentsByStep as $stepId => $stepComments) {
                             echo '<div class="step-comments">';
-                            echo '<h3>Step ' . htmlspecialchars($stepId) . '</h3>';
+                            echo '<h3>Step ' . $status_name . '</h3>';
                             foreach ($stepComments as $comment) {
                                 echo '<div class="comment">';
                                 echo '<p><strong>' . htmlspecialchars($comment['username']) . '</strong> <small>(' . htmlspecialchars($comment['timestamp']) . ')</small></p>';

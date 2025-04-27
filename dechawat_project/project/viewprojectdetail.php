@@ -104,11 +104,14 @@
                     $commentsByStep = $comments;
                     $subcomments = $subcomments;
 
+                    $findStatudId = array_column($status, 'status_id');
+                    $findIndex = array_search($key, $findStatudId);
+                    $status_name = $index !== false ? $status[$index]['status_name'] : null;
                     // Display comments with subcomments
                     if($commentsByStep){
                         foreach ($commentsByStep as $stepId => $stepComments) {
                             echo '<div class="step-comments">';
-                            echo '<h3>Step ' . htmlspecialchars($stepId) . '</h3>';
+                            echo '<h3>Step ' . htmlspecialchars($status_name) . '</h3>';
                             foreach ($stepComments as $comment) {
                                 echo '<div class="comment">';
                                 echo '<p><strong>' . htmlspecialchars($comment['username']) . '</strong> <small>(' . htmlspecialchars($comment['timestamp']) . ')</small></p>';
