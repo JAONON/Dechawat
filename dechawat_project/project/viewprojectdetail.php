@@ -77,10 +77,10 @@
                         <div class="mb-3">
                             <label for="stepFilter" class="form-label">Select Step</label>
                             <select class="form-select" id="stepFilter" name="stepFilter" onchange="this.form.submit()">
-                                <?php foreach ($status as $step): ?>
+                                <?php foreach ($status as $key => $step): ?>
                                     <option value="<?php echo htmlspecialchars($step['status_id']); ?>" 
                                         <?php echo (isset($selectStatusSearch) && $selectStatusSearch == $step['status_id']) ? 'selected' : ''; ?>>
-                                        Step <?php echo htmlspecialchars($step['status_id']); ?>: <?php echo htmlspecialchars($step['status_name']); ?>
+                                        Step <?php echo $key + 1 ?>: <?php echo htmlspecialchars($step['status_name']); ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>

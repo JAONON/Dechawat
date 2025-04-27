@@ -47,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if($lastInsertId)
     {
         foreach ($project_status as $statuskey => $status) {
+            $statusActive = $statuskey == 0 ? 1 : 0;
             $sql = "
                 INSERT INTO 
                     status 
@@ -61,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bindValue(':project_id', $lastInsertId);
             $stmt->bindParam(':status_name', $status);
             $stmt->bindValue(':status_orders', $statuskey + 1);
-            $stmt->bindValue(':success', 0);
+            $stmt->bindValue(':success', $statusActive);
             $stmt->execute();
         }
         
