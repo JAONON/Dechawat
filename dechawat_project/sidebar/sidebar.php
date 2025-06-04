@@ -43,37 +43,37 @@
         //         ['title' => 'Add', 'link' => '../project/addproject.php']
         //     ]
         // ],
-        [
-            'title' => 'Menu 3',
-            'link' => '#',
-            'submenu' => []
-        ],
-        [
-            'title' => 'Menu 4',
-            'link' => '#',
-            'submenu' => [
-                ['title' => 'Submenu 4.1', 'link' => '#'],
-                ['title' => 'Submenu 4.2', 'link' => '#']
-            ]
-        ],
-        [
-            'title' => 'Menu 5',
-            'link' => '#',
-            'submenu' => []
-        ],
-        [
-            'title' => 'Menu 6',
-            'link' => '#',
-            'submenu' => []
-        ],
-        [
-            'title' => 'Menu 8',
-            'link' => '#',
-            'submenu' => []
-        ],
+        // [
+        //     'title' => 'Menu 3',
+        //     'link' => '#',
+        //     'submenu' => []
+        // ],
+        // [
+        //     'title' => 'Menu 4',
+        //     'link' => '#',
+        //     'submenu' => [
+        //         ['title' => 'Submenu 4.1', 'link' => '#'],
+        //         ['title' => 'Submenu 4.2', 'link' => '#']
+        //     ]
+        // ],
+        // [
+        //     'title' => 'Menu 5',
+        //     'link' => '#',
+        //     'submenu' => []
+        // ],
+        // [
+        //     'title' => 'Menu 6',
+        //     'link' => '#',
+        //     'submenu' => []
+        // ],
+        // [
+        //     'title' => 'Menu 8',
+        //     'link' => '#',
+        //     'submenu' => []
+        // ],
         [
             'title' => 'Profile',
-            'link' => '../profile/get_profile.php',
+            'link' => '../../profile/get_profile.php',
             'submenu' => []
         ],
         [
@@ -85,7 +85,7 @@
     $menuItems["employer"] = [
         [
             'title' => 'Home',
-            'link' => '../index/index.php',
+            'link' => '../project/getproject.php',
             'submenu' => []
         ],
         [
@@ -96,34 +96,34 @@
                 ['title' => 'Add', 'link' => '../project/addproject.php']
             ]
         ],
-        [
-            'title' => 'Menu 3',
-            'link' => '#',
-            'submenu' => []
-        ],
-        [
-            'title' => 'Menu 4',
-            'link' => '#',
-            'submenu' => [
-                ['title' => 'Submenu 4.1', 'link' => '#'],
-                ['title' => 'Submenu 4.2', 'link' => '#']
-            ]
-        ],
-        [
-            'title' => 'Menu 5',
-            'link' => '#',
-            'submenu' => []
-        ],
-        [
-            'title' => 'Menu 6',
-            'link' => '#',
-            'submenu' => []
-        ],
-        [
-            'title' => 'Menu 8',
-            'link' => '#',
-            'submenu' => []
-        ],
+        // [
+        //     'title' => 'Menu 3',
+        //     'link' => '#',
+        //     'submenu' => []
+        // ],
+        // [
+        //     'title' => 'Menu 4',
+        //     'link' => '#',
+        //     'submenu' => [
+        //         ['title' => 'Submenu 4.1', 'link' => '#'],
+        //         ['title' => 'Submenu 4.2', 'link' => '#']
+        //     ]
+        // ],
+        // [
+        //     'title' => 'Menu 5',
+        //     'link' => '#',
+        //     'submenu' => []
+        // ],
+        // [
+        //     'title' => 'Menu 6',
+        //     'link' => '#',
+        //     'submenu' => []
+        // ],
+        // [
+        //     'title' => 'Menu 8',
+        //     'link' => '#',
+        //     'submenu' => []
+        // ],
         [
             'title' => 'Profile',
             'link' => '../profile/get_profile.php',

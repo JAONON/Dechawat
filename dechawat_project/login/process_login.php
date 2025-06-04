@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: ../employee/index/index.php');
             exit();
         }else{
-            header('Location: ../index/index.php');
+            header('Location: ../project/getproject.php');
             exit();
         }
     } else {

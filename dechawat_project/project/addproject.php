@@ -38,13 +38,18 @@
                     <label for="project_price">Project Price:</label><br>
                     <input class="form-control" type="number" id="project_price" name="project_price" required><br>
 
-                    <label for="contract">Contract:</label><br>
-                    <input class="form-control" id="contract" name="contract" required><br>
+                    <label for="contract">Employment Contract:</label><br>
+                    <input class="form-control" type="file" id="contact_images" name="contact_images[]" multiple accept="image/*" onchange="previewImages3()"><br>
+                    <div class="preview" id="contact_preview"></div>
 
-                    <label for="blueprint_images">Blueprint Images:</label><br>
-                    <input class="form-control" type="file" id="blueprint_images" name="blueprint_images[]" multiple accept="image/*" onchange="previewImages()"><br>
+                    <label for="plan_images">Plan Images:</label><br>
+                    <input class="form-control" type="file" id="plan_images" name="plan_images[]" multiple accept="image/*" onchange="previewImages()"><br>
+                    <div class="preview" id="plan_preview"></div>
 
+                    <label for="blueprint_images">Project Images:</label><br>
+                    <input class="form-control" type="file" id="blueprint_images" name="blueprint_images[]" multiple accept="image/*" onchange="previewImages2()"><br>
                     <div class="preview" id="image_preview"></div>
+
                     <script>
                         document.querySelector('form').addEventListener('submit', function(event) {
                             const projectName = document.getElementById('project_name').value.trim();
@@ -80,17 +85,23 @@
                     <label for="project_date">Date:</label><br>
                     <input class="form-control" type="date" id="project_date" name="project_date" required><br>
                     <div id="status_container">
-                        <label for="project_status_1">Project Status:</label><br>
-                        <div class="row">
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" id="project_status_1" name="project_status[]" required><br>
-                            </div>
-                            <div class="col-md-3">
-                                <button type="button" class="btn btn-secondary" onclick="removeStatus(this)">-</button>
+                        <div class="form-group">
+                            <label for="project_status_1">Project Status:</label>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <input class="form-control" type="text" id="project_status_1" name="project_status[]" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-secondary" onclick="removeStatus(this)">-</button>
+                                </div>
                             </div>
                         </div>
+                        <div class="form-group mt-3 col-md-9">
+                            <label for="date_status">Status Date:</label>
+                            <input class="form-control" type="date" id="date_status" name="date_status" required>
+                        </div>
                     </div>
-                    <button type="button" class="btn btn-secondary" onclick="addStatus()">+ Add Status</button>
+                    <button type="button" class="btn btn-secondary mt-4" onclick="addStatus()">+ Add Status</button>
                         
                     <script>
                         let statusCount = 1;
@@ -99,14 +110,21 @@
                             statusCount++;
                             const statusContainer = document.getElementById('status_container');
                             const newStatusDiv = document.createElement('div');
+                            newStatusDiv.classList.add('form-group', 'mt-4');
                             newStatusDiv.innerHTML = `
                             <div class="row">
-                                <label for="project_status_${statusCount}">Project Status:</label><br>
                                 <div class="col-md-9">
-                                    <input class="form-control" type="text" id="project_status_${statusCount}" name="project_status[]" required><br>
+                                    <label for="project_status_${statusCount}">Project Status:</label>
+                                    <input class="form-control" type="text" id="project_status_${statusCount}" name="project_status[]" required>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 d-flex align-items-end">
                                     <button type="button" class="btn btn-secondary" onclick="removeStatus(this)">-</button>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-9">
+                                    <label for="date_status_${statusCount}">Status Date:</label>
+                                    <input class="form-control" type="date" id="date_status_${statusCount}" name="date_status[]" required>
                                 </div>
                             </div>
                             `;
@@ -134,9 +152,41 @@
 
     <script>
         function previewImages() {
+            const preview = document.getElementById('plan_preview');
+            preview.innerHTML = '';
+            const files = document.getElementById('plan_images').files;
+
+            for (const file of files) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    preview.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function previewImages2() {
             const preview = document.getElementById('image_preview');
             preview.innerHTML = '';
             const files = document.getElementById('blueprint_images').files;
+
+            for (const file of files) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    preview.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function previewImages3() {
+            const preview = document.getElementById('contact_preview');
+            preview.innerHTML = '';
+            const files = document.getElementById('contact_images').files;
 
             for (const file of files) {
                 const reader = new FileReader();

@@ -12,6 +12,7 @@
             padding-left: 0;
         }
     </style>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3 pl-0">
@@ -62,24 +63,30 @@
                         </thead>
                         <tbody>
                             <!-- Example Row -->
-                             <?php foreach ($arrProjects as $key => $value) { ?>
+                             <?php if(COUNT($arrProjects) > 0){ ?>
+                                <?php foreach ($arrProjects as $key => $value) { ?>
+                                    <tr>
+                                        <td><?php echo $value['name'] ?></td>
+                                        <td><?php echo $value['date_project'] ?></td>
+                                        <td><?php echo '฿ '.$value['price'] ?></td>
+                                        <td><?php echo $value['employment_contract'] ?></td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-primary">
+                                                <form action="getdetailproject.php" method="post" style="display:inline;">
+                                                    <input type="hidden" name="project_id" value="<?php echo $value['project_id']; ?>">
+                                                    <button type="submit" class="btn btn-sm btn-primary">
+                                                        <i class="bi bi-search"></i> View
+                                                    </button>
+                                                </form>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            <?php }else { ?>
                                 <tr>
-                                    <td><?php echo $value['name'] ?></td>
-                                    <td><?php echo $value['date_project'] ?></td>
-                                    <td><?php echo '฿ '.$value['price'] ?></td>
-                                    <td><?php echo $value['employment_contract'] ?></td>
-                                    <td>
-                                        <a href="#" class="btn btn-sm btn-primary">
-                                            <form action="getdetailproject.php" method="post" style="display:inline;">
-                                                <input type="hidden" name="project_id" value="<?php echo $value['project_id']; ?>">
-                                                <button type="submit" class="btn btn-sm btn-primary">
-                                                    <i class="bi bi-search"></i> View
-                                                </button>
-                                            </form>
-                                        </a>
-                                    </td>
+                                    <td colspan="5" class="text-center">No projects found.</td>
                                 </tr>
-                             <?php } ?>
+                            <?php } ?>
                             <!-- Add more rows dynamically here -->
                         </tbody>
                     </table>
