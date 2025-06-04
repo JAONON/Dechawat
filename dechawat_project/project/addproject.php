@@ -94,11 +94,11 @@
                                 <div class="col-md-3">
                                     <button type="button" class="btn btn-secondary" onclick="removeStatus(this)">-</button>
                                 </div>
+                                <div class="form-group mt-3 col-md-9">
+                                    <label for="date_status">Status Date:</label>
+                                    <input class="form-control" type="date" id="date_status" name="date_status" required>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group mt-3 col-md-9">
-                            <label for="date_status">Status Date:</label>
-                            <input class="form-control" type="date" id="date_status" name="date_status" required>
                         </div>
                     </div>
                     <button type="button" class="btn btn-secondary mt-4" onclick="addStatus()">+ Add Status</button>
@@ -120,11 +120,11 @@
                                 <div class="col-md-3 d-flex align-items-end">
                                     <button type="button" class="btn btn-secondary" onclick="removeStatus(this)">-</button>
                                 </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-md-9">
-                                    <label for="date_status_${statusCount}">Status Date:</label>
-                                    <input class="form-control" type="date" id="date_status_${statusCount}" name="date_status[]" required>
+                                <div class="row mt-3">
+                                    <div class="col-md-9">
+                                        <label for="date_status_${statusCount}">Status Date:</label>
+                                        <input class="form-control" type="date" id="date_status_${statusCount}" name="date_status[]" required>
+                                    </div>
                                 </div>
                             </div>
                             `;
@@ -133,10 +133,10 @@
 
                         function removeStatus(button) {
                             const statusContainer = document.getElementById('status_container');
-                            const statusRows = statusContainer.querySelectorAll('.row');
-                            if (statusRows.length > 1) {
-                                const statusRow = button.closest('.row');
-                                statusRow.remove();
+                            const statusGroups = statusContainer.querySelectorAll('.form-group');
+                            if (statusGroups.length > 1) {
+                                const statusGroup = button.closest('.form-group');
+                                statusGroup.remove();
                             } else {
                                 alert('At least one status is required.');
                             }
