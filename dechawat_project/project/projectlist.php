@@ -57,7 +57,6 @@
                                 <th>Name</th>
                                 <th>Date</th>
                                 <th>Price</th>
-                                <th>Date Estimate</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -69,7 +68,6 @@
                                         <td><?php echo $value['name'] ?></td>
                                         <td><?php echo $value['date_project'] ?></td>
                                         <td><?php echo '฿ '.$value['price'] ?></td>
-                                        <td><?php echo $value['employment_contract'] ?></td>
                                         <td>
                                             <a href="#" class="btn btn-sm btn-primary">
                                                 <form action="getdetailproject.php" method="post" style="display:inline;">
