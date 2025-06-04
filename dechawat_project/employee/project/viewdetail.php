@@ -15,6 +15,10 @@
     }
 </style>
 <body>
+    <?php 
+        $employment_contract = "../../asset/image/project/" . $projectData['project_id'] .'/'. $projectData['employment_contract'];
+        $plan_images = "../../asset/image/project/" . $projectData['project_id'] .'/'. $projectData['plan_images'];
+    ?>
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->
@@ -59,9 +63,9 @@
                 <p><strong>Name:</strong> <?php echo htmlspecialchars($projectData['name']); ?></p>
                 <p><strong>Description:</strong> <?php echo htmlspecialchars($projectData['description']); ?></p>
                 <p><strong>Price:</strong> <?php echo number_format($projectData['price']); ?> THB</p>
-                <p><strong>Employment Contract:</strong> <?php echo htmlspecialchars($projectData['employment_contract']); ?></p>
+                <p><strong>Employment Contract:</strong><img src="<?php echo htmlspecialchars($employment_contract); ?>" alt="Employment Contract Image" style="max-width: 200px; display: block; margin-bottom: 10px;"></p>
+                <p><strong>Plan :</strong><img src="<?php echo htmlspecialchars($plan_images); ?>" alt="Employment Contract Image" style="max-width: 200px; display: block; margin-bottom: 10px;"></p>
                 <p><strong>Date:</strong> <?php echo htmlspecialchars($projectData['date_project']); ?></p>
-                <p><strong>Status:</strong> <?php echo htmlspecialchars($projectData['status']); ?></p>
 
                 <h2>Project Images</h2>
                 <?php foreach ($image as $val){ ?>
@@ -126,14 +130,18 @@
                     // Display comments with subcomments
                     if($commentsByStep){
                         foreach ($commentsByStep as $stepId => $stepComments) {
+                            $date_terminate = array_values(array_filter($status, function($item) use ($stepId) {
+                                return $item['status_id'] == $stepId;
+                            }));
+                            $date_terminate = $date_terminate[0]['date_termined'] . " 23:59:59";
                             echo '<div class="step-comments">';
                             echo '<h3>Step ' . $status_name . '</h3>';
                             foreach ($stepComments as $comment) {
                                 echo '<div class="comment">';
-                                echo '<p><strong>' . htmlspecialchars($comment['username']) . '</strong> <small>(' . htmlspecialchars($comment['timestamp']) . ')</small></p>';
+                                echo '<p><strong>' . htmlspecialchars($comment['username']) . '</strong> <small>(' . htmlspecialchars($comment['timestamp']) . ')</small> <span style="color:red;">' . (htmlspecialchars($comment['timestamp']) > $date_terminate ? 'ล่าช้า' : '') . '</span></p>';
                                 echo '<p>' . htmlspecialchars($comment['comment']) . '</p>';
                                 if ($comment['image']) {
-                                    $image_path = "../asset/image/comment/" . $comment['comment_id'] ."/". $comment['image'];
+                                    $image_path = "../../asset/image/comment/" . $comment['comment_id'] ."/". $comment['image'];
                                     echo '<img src="' . htmlspecialchars($image_path) . '" alt="Comment Image" style="max-width: 200px; display: block; margin-bottom: 10px;">';
                                 }
     
