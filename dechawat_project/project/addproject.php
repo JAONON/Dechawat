@@ -96,7 +96,7 @@
                                 </div>
                                 <div class="form-group mt-3 col-md-9">
                                     <label for="date_status">Status Date:</label>
-                                    <input class="form-control" type="date" id="date_status" name="date_status" required>
+                                    <input class="form-control" type="date" id="date_status" name="date_status[]" required>
                                 </div>
                             </div>
                         </div>
