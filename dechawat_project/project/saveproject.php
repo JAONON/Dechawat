@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 foreach ($arrPic['tmp_name'] as $key => $tmpName) {
                     $datetime = date('YmdHis');
                     $fileExtension = pathinfo($_FILES['contact_images']['name'][$key], PATHINFO_EXTENSION);
-                    $newFileName = "project_image_{$datetime}_{$key}." . $fileExtension;
+                    $newFileName = "project_contact_{$datetime}_{$key}." . $fileExtension;
                     
                     $targetFilePath = $uploadDir . $newFileName;
                     
@@ -161,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 foreach ($arrPic['tmp_name'] as $key => $tmpName) {
                     $datetime = date('YmdHis');
                     $fileExtension = pathinfo($_FILES['plan_images']['name'][$key], PATHINFO_EXTENSION);
-                    $newFileName = "project_image_{$datetime}_{$key}." . $fileExtension;
+                    $newFileName = "project_plan_{$datetime}_{$key}." . $fileExtension;
                     
                     $targetFilePath = $uploadDir . $newFileName;
                     
