@@ -34,7 +34,7 @@ $getLimit = "
     FROM project 
     WHERE member_id = :member_id 
     AND name LIKE :searchText
-    AND status IN ('pending', 'inprogress')
+    AND status IN ('complete')
 ";
 
 // เพิ่มเงื่อนไขแบบปลอดภัย
@@ -71,4 +71,4 @@ $project = $stmtLimit->fetchAll(PDO::FETCH_ASSOC);
 $total = $countAll['total'];
 $arrProjects = $project;
 
-include './projectlist.php';
+include './projectlistsuccess.php';

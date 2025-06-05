@@ -29,14 +29,6 @@
                             <input type="date" class="form-control" placeholder="Search by date" value="<?php echo isset($_GET['searchDate']) ? htmlspecialchars($_GET['searchDate']) : ''; ?>">
                         </div>
                         <div class="col-md-3">
-                            <select class="form-select">
-                                <option value="" <?php echo !isset($_GET['searchStatus']) || $_GET['searchStatus'] === '' ? 'selected' : ''; ?>>Select Status</option>
-                                <option value="pending" <?php echo isset($_GET['searchStatus']) && $_GET['searchStatus'] === 'pending' ? 'selected' : ''; ?>>Pending</option>
-                                <option value="inprogress" <?php echo isset($_GET['searchStatus']) && $_GET['searchStatus'] === 'inprogress' ? 'selected' : ''; ?>>In Progress</option>
-                                <option value="complete" <?php echo isset($_GET['searchStatus']) && $_GET['searchStatus'] === 'complete' ? 'selected' : ''; ?>>Completed</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
                             <button class="btn btn-primary w-100" onclick="searchProjects()">Search</button>
                         </div>
                         <script>
@@ -44,7 +36,7 @@
                                 
                                 const searchText = document.querySelector('input[placeholder="Search by name"]').value;
                                 const searchDate = document.querySelector('input[type="date"]').value;
-                                const searchStatus = document.querySelector('select').value;
+                                const searchStatus = 'complete'; // Fixed to search for completed projects
 
                                 const params = new URLSearchParams({ searchText, searchDate, searchStatus }).toString();
                                 window.location.href = `getproject.php?${params}`;
@@ -74,15 +66,6 @@
                                                     <input type="hidden" name="project_id" value="<?php echo $value['project_id']; ?>">
                                                     <button type="submit" class="btn btn-sm btn-primary">
                                                         <i class="bi bi-search"></i> View
-                                                    </button>
-                                                </form>
-                                            </a>
-
-                                            <a href="#" class="btn btn-sm btn-success ml-4">
-                                                <form action="updateStatusProject.php" method="post" style="display:inline;">
-                                                    <input type="hidden" name="project_id" value="<?php echo $value['project_id']; ?>">
-                                                    <button type="submit" class="btn btn-sm btn-success">
-                                                        <i class="bi bi-search"></i> Success
                                                     </button>
                                                 </form>
                                             </a>

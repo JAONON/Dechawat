@@ -93,7 +93,8 @@
             'link' => '#',
             'submenu' => [
                 ['title' => 'List', 'link' => '../project/getproject.php'],
-                ['title' => 'Add', 'link' => '../project/addproject.php']
+                ['title' => 'Add', 'link' => '../project/addproject.php'],
+                ['title' => 'Success', 'link' => '../project/getprojectsuccess.php']
             ]
         ],
         // [
