@@ -38,7 +38,7 @@
 
     if($_FILES){
         // Define the directory path
-        $uploadDir = '../asset/image/comment/' . $lastInsertId . '/';
+        $uploadDir = '../../asset/image/comment/' . $lastInsertId . '/';
 
         // Check if the directory exists, if not, create it
         if (!is_dir($uploadDir)) {

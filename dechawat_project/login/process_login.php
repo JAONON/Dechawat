@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Redirect to dashboard or home page
         $_SESSION["member"] = $user;
         if($user["role"] == "employee"){
-            header('Location: ../employee/index/index.php');
+            header('Location: ../employee/project/getproject.php');
             exit();
         }else{
             header('Location: ../project/getproject.php');
