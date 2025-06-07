@@ -85,7 +85,7 @@
     $menuItems["employer"] = [
         [
             'title' => 'Home',
-            'link' => '../project/getproject.php',
+            'link' => '../home/getGraphDetail.php',
             'submenu' => []
         ],
         [

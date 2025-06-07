@@ -16,7 +16,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $stepId = $_POST["step"];
     $projectId = $_POST["project_id"];
+
+    // get status
+    $sql = "SELECT * FROM status WHERE project_id = :project_id AND success = 0";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':project_id', $projectId, PDO::PARAM_INT);
+    $stmt->execute();
+    $projectStatus = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $countStatus = count($projectStatus);
     
+    if ($countStatus > 0) {
+        echo "
+            <script>
+                alert('Cannot Update Project Success, There are still steps that are not completed.');
+                window.location = '../project/getproject.php?project_id=" . urlencode($projectId) . "';
+            </script>
+        ";
+        exit();
+    }
     // Prepare SQL query to insert project
     $sql = "
         UPDATE
