@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: ../employee/project/getproject.php');
             exit();
         }else{
-            header('Location: ../project/getproject.php');
+            header('Location: ../home/getGraphDetail.php');
             exit();
         }
     } else {
